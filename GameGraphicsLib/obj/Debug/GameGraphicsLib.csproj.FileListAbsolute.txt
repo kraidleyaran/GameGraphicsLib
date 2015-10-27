@@ -1,0 +1,16 @@
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\GameGraphicsLib.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\GameGraphicsLib.pdb
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\MonoGame.Framework.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\SharpDX.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\SharpDX.XAudio2.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\SharpDX.Direct3D11.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\SharpDX.DXGI.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\SharpDX.Direct2D1.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\SharpDX.XInput.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\SharpDX.RawInput.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\SharpDX.Direct3D9.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\bin\Debug\MonoGame.Framework.xml
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\obj\Debug\GameGraphicsLib.dll
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\obj\Debug\GameGraphicsLib.pdb
+C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameGraphicsLib\GameGraphicsLib\obj\Debug\GameGraphicsLib.csprojResolveAssemblyReference.cache
