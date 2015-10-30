@@ -153,11 +153,13 @@ namespace GameGraphicsLib
         public void ClearDrawList()
         {
             drawList.Clear();
+            drawList = new Dictionary<string, Animation>();
         }
 
         public void ClearAnimationList()
         {
             animationList.Clear();
+            animationList = new Dictionary<string, Animation>();
         }
 
         

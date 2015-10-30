@@ -7,7 +7,10 @@ namespace GameGraphicsLib
     [Serializable]
     public class GraphicsData
     {
-        
+        public GraphicsData()
+        {
+            Animations = new List<Animation>();
+        }
         public GraphicsData(Dictionary<string, Animation> animationList, GameGraphics graphics)
         {
             Animations = new List<Animation>();
