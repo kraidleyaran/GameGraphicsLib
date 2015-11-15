@@ -6,15 +6,18 @@ namespace GameGraphicsLib
     [Serializable]
     public class DrawParam
     {
-        public DrawParam(string objectName, string animation, Vector2 postiion)
+        public DrawParam(string objectName, string drawableName, Vector2 position, DrawnType drawType)
         {
             ObjectName = objectName;
-            Animation = animation;
-            Position = postiion;
+            DrawableName = drawableName;
+            Position = position;
+            DrawType = drawType;
+
         }
 
         public string ObjectName { get; private set; }
-        public string Animation { get; private set; }
+        public string DrawableName { get; private set; }
         public Vector2 Position { get; private set; }
+        public DrawnType DrawType { get; private set; }
     }
 }

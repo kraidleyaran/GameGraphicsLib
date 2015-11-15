@@ -25,5 +25,28 @@ namespace GameGraphicsLib
             ColorData = new byte[4 * Width * Height];
             texture.GetData(ColorData, 0, ColorData.Length);
         }
+
+        public static Texture2D RemoveTransparentColor(Texture2D texture, Color color)
+        {
+            int width = texture.Width;
+            int height = texture.Height;
+            Color[] colorData = new Color[width * height];
+            texture.GetData(colorData);
+            for (int x = 0; x < height; x++)
+            {
+                for (int y = 0; y < width; y++)
+                {
+                    int pos = x*width + y;
+                    Color currentPixel = colorData[pos];
+                    if (currentPixel == color)
+                    {
+                        colorData[pos] = new Color(0, 0, 0, 0);
+                    }
+                }
+            }
+
+            texture.SetData(colorData, 0, colorData.Length);
+            return texture;
+        }
     }
 }

@@ -31,12 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="C3.XNA.Primitives2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalRefs\C3.XNA.Primitives2D.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Framework, Version=3.4.0.459, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MonoGame.Framework.WindowsDX.3.4.0.459\lib\net40\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,14 +51,45 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationAction.cs" />
+    <Compile Include="AnimationCache.cs" />
+    <Compile Include="AnimationStatus.cs" />
     <Compile Include="BinaryTexture.cs" />
+    <Compile Include="CacheObjects\ICache.cs" />
+    <Compile Include="DrawableShapes\DrawnLine.cs" />
+    <Compile Include="DrawableShapes\DrawnRectangle.cs" />
+    <Compile Include="DrawableShapes\IColorable.cs" />
+    <Compile Include="DrawableShapes\IDrawnShape.cs" />
+    <Compile Include="DrawableShapes\ShapeType.cs" />
+    <Compile Include="DrawnType.cs" />
+    <Compile Include="DrawnString.cs" />
+    <Compile Include="IDrawn.cs" />
+    <Compile Include="CacheObjects\DrawCache.cs" />
     <Compile Include="DrawParam.cs" />
+    <Compile Include="Frame.cs" />
     <Compile Include="GameGraphics.cs" />
+    <Compile Include="GameRectangle.cs" />
     <Compile Include="GraphicsData.cs" />
+    <Compile Include="CacheObjects\ObjectCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextureManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ExternalRefs\C3.XNA.Primitives2D.dll" />
+    <Content Include="ExternalRefs\GameGraphicsLib.dll" />
+    <Content Include="ExternalRefs\MonoGame.Framework.dll" />
+    <Content Include="ExternalRefs\MonoGame.Framework.xml" />
+    <Content Include="ExternalRefs\SharpDX.Direct2D1.dll" />
+    <Content Include="ExternalRefs\SharpDX.Direct3D11.dll" />
+    <Content Include="ExternalRefs\SharpDX.Direct3D9.dll" />
+    <Content Include="ExternalRefs\SharpDX.dll" />
+    <Content Include="ExternalRefs\SharpDX.DXGI.dll" />
+    <Content Include="ExternalRefs\SharpDX.MediaFoundation.dll" />
+    <Content Include="ExternalRefs\SharpDX.RawInput.dll" />
+    <Content Include="ExternalRefs\SharpDX.XAudio2.dll" />
+    <Content Include="ExternalRefs\SharpDX.XInput.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

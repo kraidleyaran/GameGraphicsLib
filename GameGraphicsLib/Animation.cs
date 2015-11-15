@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,22 +10,22 @@ using GameGraphicsLib;
 namespace GameGraphicsLib
 {
     [Serializable]
-    public class Animation
+    public class Animation : IDrawn
     {
+        private const DrawnType _DrawnType = DrawnType.Animation;
+        private readonly Dictionary<int, Frame> frames = new Dictionary<int, Frame>();
+        
         public int framecount;
 
-        private BinaryTexture Texture;
+        public string Texture;
         private float TimePerFrame;
-        private int Frame;
-        private float TotalElapsed;
-        private bool Paused;
-        private float OriginX;
-        private float OriginY;
+        private int _frame;
+        private float _totalElapsed;
+        private bool _paused;
+        private float _originX;
+        private float _originY;
 
         public float Rotation, Scale, Depth;
-
-        public float PositionX;
-        public float PositionY;
         
         public int FramesPerSecond;
         public bool IsLoop;
@@ -32,41 +34,40 @@ namespace GameGraphicsLib
         {
             Name = name;
         }
-        public Animation(string name, Texture2D texture, int frames, float rotation, float scale, float depth, Vector2 position, Vector2 origin, int framesPerSec )
+        public Animation(string name, string texture, float rotation, float scale, float depth, Vector2 position, Vector2 origin, int framesPerSec )
         {
             SetPosition(position);
             SetOrigin(origin);
             Name = name;
-            Texture = new BinaryTexture(texture);
-            framecount = frames;
+            Texture = texture;
+            framecount = frames.Count;
             Rotation = rotation;
             Scale = scale;
             Depth = depth;
-            Height = texture.Height;
-            Width = texture.Width;
             FramesPerSecond = framesPerSec;
             TimePerFrame = (float) 1/FramesPerSecond;
         }
-
+        public AnimationStatus Status { get; private set; }
         public string Name { get; set; }
-        public float Height { get; private set; }
-        public float Width { get; private set; }
-
+        public float PositionX { get; set; }
+        public float PositionY { get;set; }
+        public DrawnType DrawnType { get { return _DrawnType; } set { } }
+        public Dictionary<int, Frame> Frames { get { return frames; } }
+        public int Frame { get { return _frame;} set { _frame = value; } }
         public void UpdateFrame(float elapsed)
         {
-            if (Paused)
+            if (_paused)
                 return;
-
-            TotalElapsed += elapsed;
-            if (!(TotalElapsed > TimePerFrame)) return;
-            Frame++;
+            if (Status != AnimationStatus.Playing)
+            {
+                Status = AnimationStatus.Playing;
+            }
+            _totalElapsed += elapsed;
+            if (!(_totalElapsed > TimePerFrame)) return;
+            _frame++;
             // Keep the Frame between 0 and the total frames, minus one.
-            Frame = Frame % framecount;
-            TotalElapsed -= TimePerFrame;
-        }
-        public void DrawFrame(SpriteBatch batch, GameGraphics graphics)
-        {
-            DrawFrame(batch,graphics, Frame, GetPosition(), GetOrigin());
+            _frame = Frame % framecount;
+            _totalElapsed -= TimePerFrame;
         }
 
         /*
@@ -76,41 +77,40 @@ namespace GameGraphicsLib
         }
          */
 
-        public Animation CloneAnimation(string name, GameGraphics graphics)
+        public Animation CloneAnimation(string name)
         {
-            return new Animation(name, GetTextureData(graphics), framecount, Rotation, Scale, Depth, GetPosition(), GetOrigin(), FramesPerSecond);
-        }
-        private void DrawFrame(SpriteBatch batch, GameGraphics graphics, int frame, Vector2 screenPos, Vector2 origin)
-        {
-            Texture2D texture = GetTextureData(graphics);
-            int frameWidth = (int)Width / framecount;
-            Rectangle sourcerect = new Rectangle(frameWidth * frame, 0,
-                frameWidth, texture.Height);
-            batch.Draw(texture, screenPos, sourcerect, Color.White,
-                Rotation, origin, Scale, SpriteEffects.None, Depth);
+            Animation returnAnimation = new Animation(name, Texture, Rotation, Scale, Depth, GetPosition(), GetOrigin(), FramesPerSecond);
+            foreach (KeyValuePair<int, Frame> pair in Frames)
+            {
+                returnAnimation.AddFrame(pair.Value);
+            }
+            return returnAnimation;
         }
 
         public bool IsPaused
         {
-            get { return Paused; }
+            get { return _paused; }
         }
         public void Reset()
         {
             Frame = 0;
-            TotalElapsed = 0f;
+            _totalElapsed = 0f;
         }
         public void Stop()
         {
             Pause();
             Reset();
+            Status = AnimationStatus.Stopped;
         }
         public void Play()
         {
-            Paused = false;
+            _paused = false;
+            Status = AnimationStatus.Playing;
         }
         public void Pause()
         {
-            Paused = true;
+            _paused = true;
+            Status = AnimationStatus.Paused;
         }
 
         public int GetCurrentFrame()
@@ -148,16 +148,48 @@ namespace GameGraphicsLib
 
         public Vector2 SetOrigin(Vector2 origin)
         {
-            OriginX = origin.X;
-            OriginY = origin.Y;
-            return new Vector2(OriginX,OriginY);
+            _originX = origin.X;
+            _originY = origin.Y;
+            return new Vector2(_originX,_originY);
         }
 
         public Vector2 GetOrigin()
         {
-            return new Vector2(OriginX, OriginY);
+            return new Vector2(_originX, _originY);
         }
 
+        public void AddFrame(Frame frame)
+        {
+            frames.Add(framecount, frame);
+            framecount++;
+        }
+
+        public bool RemoveFrame(int frame)
+        {
+            bool returnBool = frames.Remove(frame);
+            if (returnBool)
+            {
+                framecount--;
+            }
+
+            return returnBool;
+        }
+
+        public bool SetFrame(int frameNumber, Frame frame)
+        {
+            if (frameNumber > framecount || frameNumber < 0)
+            {
+                return false;
+            }
+
+            frames[frameNumber] = frame;
+            return true;
+        }
+
+        public void SetStatus(AnimationStatus status)
+        {
+            Status = status;
+        }
         /*
         public Texture2D GetTextureData()
         {
@@ -166,12 +198,5 @@ namespace GameGraphicsLib
             return returnTexture;
         }
          */
-
-        public Texture2D GetTextureData(GameGraphics graphics)
-        {
-            Texture2D returnTexture = new Texture2D(graphics.GraphicsManager.GraphicsDevice, Texture.Width, Texture.Height);
-            returnTexture.SetData(Texture.ColorData, 0, Texture.ColorData.Length);
-            return returnTexture;
-        }
     }
 }
