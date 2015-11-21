@@ -113,9 +113,9 @@ namespace GameGraphicsLib
             Status = AnimationStatus.Paused;
         }
 
-        public int GetCurrentFrame()
+        public Frame GetCurrentFrame()
         {
-            return Frame;
+            return frames[Frame];
         }
 
         public int GetFrameCount()
@@ -190,6 +190,7 @@ namespace GameGraphicsLib
         {
             Status = status;
         }
+
         /*
         public Texture2D GetTextureData()
         {

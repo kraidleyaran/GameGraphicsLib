@@ -2,14 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Drawing;
-using System.Runtime.Remoting.Messaging;
-using System.Xml.Schema;
 using GameGraphicsLib.CacheObjects;
 using GameGraphicsLib.DrawableShapes;
 using Color = Microsoft.Xna.Framework.Color;
@@ -68,6 +62,45 @@ namespace GameGraphicsLib
             return textureManager.Textures.Remove(name);
         }
 
+        public Animation GetAnimation(string name)
+        {
+            if (!animationList.ContainsKey(name)) throw new KeyNotFoundException("Animation " + name + " does not exist");
+            return animationList[name];
+        }
+        //TODO: Remove this method because the one below it is what I actually wanted to do. But updating the same animation on multiple objects may be useful
+        public bool SetLoadedDrawn(IDrawn drawn)
+        {
+            if (!nameList.ContainsKey(drawn.Name)) return false;
+            if (nameList[drawn.Name] != drawn.DrawnType) return false;
+            
+            drawCache.UpdateCache(drawn);
+            drawList[drawn.Name] = drawn;
+
+            return false;
+        }
+
+        public bool SetLoadedDrawn(IDrawn drawn, string parentObjectName)
+        {
+            if (!drawCache.Cache.ContainsKey(parentObjectName)) return false;
+            drawCache.UpdateCache(drawn, parentObjectName);
+            if (drawList.ContainsKey(drawn.Name))
+            {
+                drawList[drawn.Name] = drawn;    
+            }
+            return true;
+        }
+
+        public IDrawnShape GetShape(string name)
+        {
+            if (!shapeList.ContainsKey(name)) throw new KeyNotFoundException("Shape " + name + " does not exist");
+            return shapeList[name];
+        }
+
+        public DrawnString GetString(string name)
+        {
+            if (!stringList.ContainsKey(name)) throw new KeyNotFoundException("String " + name + " does not exist");
+            return stringList[name];
+        }
         public bool AddDrawable(IDrawn drawable)
         {
             switch (drawable.DrawnType)
@@ -402,6 +435,11 @@ namespace GameGraphicsLib
             return new Color(color.R, color.G, color.B, color.A);
         }
 
+        public IDrawn GetDrawable(string name)
+        {
+            if (!DoesDrawableExist(name)) throw new Exception("Drawable " + name + " does not exist");
+            return drawList[name];
+        }
         private Texture2D CreatePixel(Color color)
         {
             Texture2D returnPixel = new Texture2D(SpriteBatch.GraphicsDevice, 1,1, false, SurfaceFormat.Color);

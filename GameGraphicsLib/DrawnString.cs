@@ -21,6 +21,7 @@ namespace GameGraphicsLib
             return new DrawnString
             {
                 Name = name,
+                Value = Value,
                 Color = Color,
                 PositionX = PositionX,
                 PositionY = PositionY,
