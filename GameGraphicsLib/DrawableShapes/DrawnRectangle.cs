@@ -1,8 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Color = Microsoft.Xna.Framework.Color;
 
 namespace GameGraphicsLib.DrawableShapes
 {
+    [Serializable]
     public class DrawnRectangle : IDrawnShape
     {
         private const DrawnType _DrawnType = DrawnType.Shape;

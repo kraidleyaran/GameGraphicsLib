@@ -47,6 +47,10 @@ namespace GameGraphicsLib
             }
         }
 
+        public List<string> GetDrawnNames()
+        {
+            return new List<string>(nameList.Keys);
+        }
         public bool AddTexture(string name, Texture2D texture)
         {
             if (textureManager.Textures.ContainsKey(name))
@@ -109,16 +113,19 @@ namespace GameGraphicsLib
                     Animation animation = (Animation) drawable;
                     if (nameList.ContainsKey(animation.Name)) return false;
                     animationList.Add(animation.Name, animation);
+                    nameList.Add(animation.Name, DrawnType.Animation);
                     return true;
                 case DrawnType.Shape:
                     IDrawnShape shape = (IDrawnShape) drawable;
                     if (nameList.ContainsKey(shape.Name)) return false;
                     shapeList.Add(shape.Name, shape );
+                    nameList.Add(shape.Name, DrawnType.Shape);
                     textureManager.PixelTextures.Add(shape.Name, CreatePixel(shape.Color));
                     return true;                    
                 case DrawnType.String:
                     DrawnString drawString = (DrawnString) drawable;
                     if (nameList.ContainsKey(drawString.Name)) return false;
+                    nameList.Add(drawString.Name, DrawnType.String);
                     stringList.Add(drawString.Name, drawString);
                     return true;
             }

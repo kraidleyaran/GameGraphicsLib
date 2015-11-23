@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace GameGraphicsLib.DrawableShapes
 {
+    [Serializable]
     public class DrawnLine : IDrawnShape
     {
         private const DrawnType _DrawnType = DrawnType.Shape;

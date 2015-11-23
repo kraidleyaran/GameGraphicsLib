@@ -11,6 +11,7 @@ namespace GameGraphicsLib
         public GraphicsData()
         {
             Animations = new List<Animation>();
+            Textures = new List<BinaryTexture>();
         }
         public GraphicsData(Dictionary<string, Animation> animationList, Dictionary<string, Texture2D> textures )
         {
