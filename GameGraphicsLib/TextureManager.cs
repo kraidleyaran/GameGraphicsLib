@@ -18,6 +18,7 @@ namespace GameGraphicsLib
         {
             Texture2D returnTexture = new Texture2D(graphics,data.Width,data.Height);
             returnTexture.SetData(data.ColorData, 0, data.ColorData.Length);
+            returnTexture.Name = data.Name;
             return returnTexture;
         }
     }
