@@ -13,7 +13,7 @@ namespace GameGraphicsLib
         {
             ConvertTextureToBinary(texture);
         }
-
+        public string Name { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
         public byte[] ColorData { get; private set; }
@@ -24,6 +24,7 @@ namespace GameGraphicsLib
             Height = texture.Height;
             ColorData = new byte[4 * Width * Height];
             texture.GetData(ColorData, 0, ColorData.Length);
+            Name = texture.Name;
         }
 
         public static Texture2D RemoveTransparentColor(Texture2D texture, Color color)

@@ -84,6 +84,7 @@ namespace GameGraphicsLib
             {
                 returnAnimation.AddFrame(pair.Value);
             }
+            returnAnimation.IsLoop = IsLoop;
             return returnAnimation;
         }
 
