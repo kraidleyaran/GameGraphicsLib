@@ -73,7 +73,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ExternalRefs\GameGraphicsLib.dll" />
     <Content Include="ExternalRefs\MonoGame.Framework.dll" />
     <Content Include="ExternalRefs\MonoGame.Framework.xml" />
     <Content Include="ExternalRefs\SharpDX.Direct2D1.dll" />

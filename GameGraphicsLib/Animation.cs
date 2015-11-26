@@ -46,6 +46,7 @@ namespace GameGraphicsLib
             Depth = depth;
             FramesPerSecond = framesPerSec;
             TimePerFrame = (float) 1/FramesPerSecond;
+            Frame = 1;
         }
         public AnimationStatus Status { get; private set; }
         public string Name { get; set; }
@@ -94,7 +95,7 @@ namespace GameGraphicsLib
         }
         public void Reset()
         {
-            Frame = 0;
+            Frame = 1;
             _totalElapsed = 0f;
         }
         public void Stop()
@@ -161,19 +162,18 @@ namespace GameGraphicsLib
 
         public void AddFrame(Frame frame)
         {
-            frames.Add(framecount, frame);
             framecount++;
+            frames.Add(framecount, frame);
         }
 
         public bool RemoveFrame(int frame)
         {
-            bool returnBool = frames.Remove(frame);
-            if (returnBool)
+            if (frame >= framecount) return false;
+            for (int i = frame; i <= framecount; i++)
             {
-                framecount--;
+                Frames[i] = Frames[i + 1];
             }
-
-            return returnBool;
+            return true;
         }
 
         public bool SetFrame(int frameNumber, Frame frame)
