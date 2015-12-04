@@ -14,8 +14,6 @@ namespace GameGraphicsLib
     {
         private const DrawnType _DrawnType = DrawnType.Animation;
         private readonly Dictionary<int, Frame> frames = new Dictionary<int, Frame>();
-        
-        public int framecount;
 
         public string Texture;
         private float TimePerFrame;
@@ -40,7 +38,6 @@ namespace GameGraphicsLib
             SetOrigin(origin);
             Name = name;
             Texture = texture;
-            framecount = frames.Count;
             Rotation = rotation;
             Scale = scale;
             Depth = depth;
@@ -51,10 +48,13 @@ namespace GameGraphicsLib
         public AnimationStatus Status { get; private set; }
         public string Name { get; set; }
         public float PositionX { get; set; }
-        public float PositionY { get;set; }
+        public float PositionY { get; set; }
+        public int DefaultWidth { get; set; }
+        public int DefaultHeight { get; set; }
         public DrawnType DrawnType { get { return _DrawnType; } set { } }
         public Dictionary<int, Frame> Frames { get { return frames; } }
         public int Frame { get { return _frame;} set { _frame = value; } }
+        public int FrameCount { get { return frames.Count; } }
         public void UpdateFrame(float elapsed)
         {
             if (_paused)
@@ -67,7 +67,7 @@ namespace GameGraphicsLib
             if (!(_totalElapsed > TimePerFrame)) return;
             _frame++;
             // Keep the Frame between 0 and the total frames, minus one.
-            _frame = Frame % framecount;
+            //_frame = (Frame / framecount) + 1;
             _totalElapsed -= TimePerFrame;
         }
 
@@ -122,7 +122,7 @@ namespace GameGraphicsLib
 
         public int GetFrameCount()
         {
-            return framecount;
+            return FrameCount;
         }
 
         public bool Loop()
@@ -162,23 +162,29 @@ namespace GameGraphicsLib
 
         public void AddFrame(Frame frame)
         {
-            framecount++;
-            frames.Add(framecount, frame);
+            frames.Add(FrameCount + 1, frame);
         }
 
         public bool RemoveFrame(int frame)
         {
-            if (frame >= framecount) return false;
-            for (int i = frame; i <= framecount; i++)
+            if (frame >= FrameCount) return false;
+            for (int i = frame; i <= FrameCount; i++)
             {
-                Frames[i] = Frames[i + 1];
+                if (i < FrameCount)
+                {
+                    Frames[i] = Frames[i + 1];
+                }
+                else
+                {
+                    Frames.Remove(FrameCount);        
+                }
             }
             return true;
         }
 
         public bool SetFrame(int frameNumber, Frame frame)
         {
-            if (frameNumber > framecount || frameNumber < 0)
+            if (frameNumber > FrameCount || frameNumber < 0)
             {
                 return false;
             }

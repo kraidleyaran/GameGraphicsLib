@@ -106,7 +106,7 @@ namespace GameGraphicsLib
             return stringList[name];
         }
         public bool AddDrawable(IDrawn drawable)
-        {
+        {            
             switch (drawable.DrawnType)
             {
                 case DrawnType.Animation:
@@ -346,16 +346,16 @@ namespace GameGraphicsLib
                 {
                     case DrawnType.Animation:
                         Animation animation = (Animation) drawable.Value;
-                        if (animation.Frame >= animation.framecount && animation.IsLoop)
+                        animation.UpdateFrame(elapsed);
+                        if (animation.Frame > animation.FrameCount && animation.IsLoop)
                         {
                             animation.Reset();
                         }
-                        else if (animation.Frame >= animation.framecount && !animation.IsLoop)
+                        else if (animation.Frame > animation.FrameCount && !animation.IsLoop)
                         {
-                            drawList.Remove(drawable.Key);
+                             drawList.Remove(drawable.Key);
                             continue;
                         }
-                        animation.UpdateFrame(elapsed);
                         drawList[drawable.Key] = animation;
                         break;
                 }
@@ -449,7 +449,7 @@ namespace GameGraphicsLib
         }
         private Texture2D CreatePixel(Color color)
         {
-            Texture2D returnPixel = new Texture2D(SpriteBatch.GraphicsDevice, 1,1, false, SurfaceFormat.Color);
+            Texture2D returnPixel = new Texture2D(GraphicsManager.GraphicsDevice, 1,1, false, SurfaceFormat.Color);
             returnPixel.SetData(new[]{color});
             return returnPixel;
         }
@@ -458,13 +458,16 @@ namespace GameGraphicsLib
         {
             Vector2 position = new Vector2(line.PositionX, line.PositionY);
             Vector2 endPos = new Vector2(line.EndX, line.EndY);
-            float angle =
-                (float)
-                    Math.Atan2(line.EndX - line.PositionX,line.EndY - line.PositionY);
-            float distance = Vector2.Distance(position,endPos);
+            Vector2 edge = endPos - position;
+            float angle = (float) Math.Atan2(edge.Y, edge.X);
             
             Texture2D pixelTexture = textureManager.PixelTextures[line.Name];
-            SpriteBatch.Draw(pixelTexture, position, null, line.Color, angle, Vector2.Zero, new Vector2(distance, line.Thickness), SpriteEffects.None, 0);
+            SpriteBatch.Draw(pixelTexture,new Rectangle((int)position.X,(int)position.Y, (int)edge.Length(),(int)line.Thickness ),
+                null,
+                line.Color,
+                angle,
+                Vector2.Zero,
+                SpriteEffects.None, 1);
         }
 
         private void DrawRectangle(DrawnRectangle rectangle)
