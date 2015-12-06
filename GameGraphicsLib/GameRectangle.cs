@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace GameGraphicsLib
 {
+    [Serializable]
     public class GameRectangle
     {
         public GameRectangle(int x, int y, int width,int height)

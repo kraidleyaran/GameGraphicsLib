@@ -427,7 +427,20 @@ namespace GameGraphicsLib
 
         public GraphicsData SaveData()
         {
-            return new GraphicsData(animationList, textureManager.Textures);
+            Dictionary<string, IDrawn> drawnObjects = new Dictionary<string, IDrawn>();
+            foreach (KeyValuePair<string, Animation> animation in animationList)
+            {
+                drawnObjects.Add(animation.Key, animation.Value);
+            }
+            foreach (KeyValuePair<string, IDrawnShape> shape in shapeList)
+            {
+                drawnObjects.Add(shape.Key, shape.Value);
+            }
+            foreach (KeyValuePair<string, DrawnString> drawString in stringList)
+            {
+                drawnObjects.Add(drawString.Key, drawString.Value);
+            }
+            return new GraphicsData(drawnObjects, textureManager.Textures, textureManager.PixelTextures);
         }
 
         public bool DoesAnimationExist(string animationName)
