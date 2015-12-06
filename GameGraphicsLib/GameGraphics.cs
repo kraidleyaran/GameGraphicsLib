@@ -78,18 +78,20 @@ namespace GameGraphicsLib
             if (nameList[drawn.Name] != drawn.DrawnType) return false;
             
             drawCache.UpdateCache(drawn);
-            drawList[drawn.Name] = drawn;
-
-            return false;
+            if (drawList.ContainsKey(drawn.Name))
+            {
+                drawList[drawn.Name] = drawn;
+            }
+            return true;
         }
 
         public bool SetLoadedDrawn(IDrawn drawn, string parentObjectName)
         {
             if (!drawCache.Cache.ContainsKey(parentObjectName)) return false;
             drawCache.UpdateCache(drawn, parentObjectName);
-            if (drawList.ContainsKey(drawn.Name))
+            if (drawList.ContainsKey(parentObjectName))
             {
-                drawList[drawn.Name] = drawn;    
+                drawList[parentObjectName] = drawn;    
             }
             return true;
         }
@@ -132,20 +134,42 @@ namespace GameGraphicsLib
             return false;
         }
 
+        public bool SetDrawable(IDrawn drawable)
+        {
+            if (!nameList.ContainsKey(drawable.Name)) return false;
+            if (nameList[drawable.Name] != drawable.DrawnType) return false;
+            switch (drawable.DrawnType)
+            {
+                case DrawnType.Animation:
+                    Animation animation = (Animation)drawable;
+                    animationList[animation.Name] = animation;
+                    return true;
+                case DrawnType.Shape:
+                    IDrawnShape shape = (IDrawnShape)drawable;
+                    shapeList[shape.Name] = shape;
+                    return true;
+                case DrawnType.String:
+                    DrawnString drawString = (DrawnString)drawable;
+                    stringList[drawString.Name] = drawString;
+                    return true;
+            }
+            return false;
+        }
         public bool RemoveDrawable(string name)
         {
             if (!nameList.ContainsKey(name)) return false;
-            nameList.Remove(name);
             switch (nameList[name])
             {
                 case DrawnType.Animation:
+                    nameList.Remove(name);
                     return animationList.Remove(name);
                 case DrawnType.Shape:
+                    nameList.Remove(name);
                     return shapeList.Remove(name);
                 case DrawnType.String:
+                    nameList.Remove(name);
                     return stringList.Remove(name);
             }
-
             return false;
         }
 

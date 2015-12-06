@@ -16,6 +16,7 @@ namespace GameGraphicsLib
         private readonly Dictionary<int, Frame> frames = new Dictionary<int, Frame>();
 
         public string Texture;
+        private int _framesPerSecond;
         private float TimePerFrame;
         private int _frame;
         private float _totalElapsed;
@@ -25,7 +26,7 @@ namespace GameGraphicsLib
 
         public float Rotation, Scale, Depth;
         
-        public int FramesPerSecond;
+        
         public bool IsLoop;
 
         public Animation(string name)
@@ -44,6 +45,8 @@ namespace GameGraphicsLib
             FramesPerSecond = framesPerSec;
             TimePerFrame = (float) 1/FramesPerSecond;
             Frame = 1;
+            DefaultHeight = 1;
+            DefaultWidth = 1;
         }
         public AnimationStatus Status { get; private set; }
         public string Name { get; set; }
@@ -55,6 +58,17 @@ namespace GameGraphicsLib
         public Dictionary<int, Frame> Frames { get { return frames; } }
         public int Frame { get { return _frame;} set { _frame = value; } }
         public int FrameCount { get { return frames.Count; } }
+
+        public int FramesPerSecond
+        {
+            get { return _framesPerSecond; }
+            set
+            {
+                _framesPerSecond = value;
+                TimePerFrame = (float) 1/_framesPerSecond;
+            }
+        }
+
         public void UpdateFrame(float elapsed)
         {
             if (_paused)
@@ -167,7 +181,7 @@ namespace GameGraphicsLib
 
         public bool RemoveFrame(int frame)
         {
-            if (frame >= FrameCount) return false;
+            if (frame > FrameCount) return false;
             for (int i = frame; i <= FrameCount; i++)
             {
                 if (i < FrameCount)
