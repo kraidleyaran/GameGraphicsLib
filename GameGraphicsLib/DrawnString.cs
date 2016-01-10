@@ -10,8 +10,8 @@ namespace GameGraphicsLib
         public string Name { get; set; }
         public string Value { get; set; }
         public Color Color { get; set; }
-        public float PositionX { get; set; }
-        public float PositionY { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
         public DrawnType DrawnType { get { return _shape; } set { } }
         public float Thickness { get; set; }
         public SpriteFont Font { get; set; }
@@ -23,8 +23,8 @@ namespace GameGraphicsLib
                 Name = name,
                 Value = Value,
                 Color = Color,
-                PositionX = PositionX,
-                PositionY = PositionY,
+                X = X,
+                Y = Y,
                 Thickness = Thickness,
                 Font = Font
             };

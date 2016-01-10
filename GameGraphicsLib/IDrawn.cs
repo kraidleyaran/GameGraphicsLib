@@ -5,8 +5,8 @@ namespace GameGraphicsLib
     public interface IDrawn
     {
         string Name { get; set; }
-        float PositionX { get; set; }
-        float PositionY { get; set; }
+        float X { get; set; }
+        float Y { get; set; }
         DrawnType DrawnType { get; set; }
     }
 }

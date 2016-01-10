@@ -183,8 +183,8 @@ namespace GameGraphicsLib
                 if (cache.Cache.ContainsKey(param.DrawableName))
                 {
                     IDrawn drawObject = cache.Cache[param.DrawableName];
-                    drawObject.PositionX = param.Position.X;
-                    drawObject.PositionY = param.Position.Y;
+                    drawObject.X = param.Position.X;
+                    drawObject.Y = param.Position.Y;
                     switch (drawObject.DrawnType)
                     {
                         case DrawnType.Animation:
@@ -208,8 +208,8 @@ namespace GameGraphicsLib
                 case DrawnType.Animation:
                     if (!animationList.ContainsKey(param.DrawableName)) return false;
                     Animation animation = animationList[param.DrawableName].CloneAnimation(param.DrawableName);
-                    animation.PositionX = param.Position.X;
-                    animation.PositionY = param.Position.Y;
+                    animation.X = param.Position.X;
+                    animation.Y = param.Position.Y;
                     drawList.Add(param.ObjectName, animation);
                     objectCache.Cache.Add(param.DrawableName, animation);
                     return true;
@@ -221,16 +221,16 @@ namespace GameGraphicsLib
                         case ShapeType.Line:
                             DrawnLine line = (DrawnLine) shape;
                             DrawnLine drawLine = line.Clone(line.Name);
-                            drawLine.PositionX = param.Position.X;
-                            drawLine.PositionY = param.Position.Y;
+                            drawLine.X = param.Position.X;
+                            drawLine.Y = param.Position.Y;
                             drawList.Add(line.Name, drawLine);
                             objectCache.Cache.Add(line.Name, drawLine);
                             return true;
                         case ShapeType.Rectangle:
                             DrawnRectangle rectangle = (DrawnRectangle) shape;
                             DrawnRectangle drawRectangle = rectangle.Clone(rectangle.Name);
-                            drawRectangle.PositionX = param.Position.X;
-                            drawRectangle.PositionY = param.Position.Y;
+                            drawRectangle.X = param.Position.X;
+                            drawRectangle.Y = param.Position.Y;
                             drawList.Add(rectangle.Name, drawRectangle);
                             objectCache.Cache.Add(rectangle.Name, drawRectangle);
                             return true;
@@ -239,8 +239,8 @@ namespace GameGraphicsLib
                 case DrawnType.String:
                     if (!stringList.ContainsKey(param.DrawableName)) return false;
                     DrawnString drawString = stringList[param.DrawableName].Clone(param.DrawableName);
-                    drawString.PositionX = param.Position.X;
-                    drawString.PositionY = param.Position.Y;
+                    drawString.X = param.Position.X;
+                    drawString.Y = param.Position.Y;
                     drawList.Add(param.ObjectName, drawString);
                     objectCache.Cache.Add(drawString.Name, drawString);
                     return true;
@@ -258,8 +258,8 @@ namespace GameGraphicsLib
                 if (cache.Cache.ContainsKey(param.DrawableName))
                 {
                     IDrawn drawableObject = cache.Cache[param.DrawableName];
-                    drawableObject.PositionX = param.Position.X;
-                    drawableObject.PositionY = param.Position.Y;
+                    drawableObject.X = param.Position.X;
+                    drawableObject.Y = param.Position.Y;
                     switch (drawableObject.DrawnType)
                     {
                         case DrawnType.Animation:
@@ -284,8 +284,8 @@ namespace GameGraphicsLib
                     if (!animationList.ContainsKey(param.DrawableName)) return false;
                     Animation animation = animationList[param.DrawableName].CloneAnimation(param.DrawableName);
                     animation.Reset();
-                    animation.PositionX = param.Position.X;
-                    animation.PositionY = param.Position.Y;
+                    animation.X = param.Position.X;
+                    animation.Y = param.Position.Y;
                     drawList.Add(param.ObjectName, animation);
                     objCache.Cache.Add(animation.Name, animation);
                     break;
@@ -297,16 +297,16 @@ namespace GameGraphicsLib
                         case ShapeType.Line:
                             DrawnLine line = (DrawnLine) shape;
                             DrawnLine drawLine = line.Clone(line.Name);
-                            drawLine.PositionX = param.Position.X;
-                            drawLine.PositionY = param.Position.Y;
+                            drawLine.X = param.Position.X;
+                            drawLine.Y = param.Position.Y;
                             drawList.Add(param.ObjectName, drawLine);
                             objCache.Cache.Add(drawLine.Name, drawLine);
                             return true;
                         case ShapeType.Rectangle:
                             DrawnRectangle rectangle = (DrawnRectangle)shape;
                             DrawnRectangle drawRectangle = rectangle.Clone(rectangle.Name);
-                            drawRectangle.PositionX = param.Position.X;
-                            drawRectangle.PositionY = param.Position.Y;
+                            drawRectangle.X = param.Position.X;
+                            drawRectangle.Y = param.Position.Y;
                             drawList.Add(param.ObjectName, drawRectangle);
                             objCache.Cache.Add(drawRectangle.Name, drawRectangle);
                             return true;
@@ -316,8 +316,8 @@ namespace GameGraphicsLib
                 case DrawnType.String:
                     if (!stringList.ContainsKey(param.DrawableName)) return false;
                     DrawnString drawString = stringList[param.DrawableName].Clone(param.DrawableName);
-                    drawString.PositionX = param.Position.X;
-                    drawString.PositionY = param.Position.Y;
+                    drawString.X = param.Position.X;
+                    drawString.Y = param.Position.Y;
                     drawList.Add(param.ObjectName, drawString);
                     objCache.Cache.Add(drawString.Name, drawString);
                     return true;
@@ -329,8 +329,8 @@ namespace GameGraphicsLib
         {
             if (!drawList.ContainsKey(param.ObjectName)) return false;
             IDrawn drawObject = drawList[param.ObjectName];
-            drawObject.PositionX = param.Position.X;
-            drawObject.PositionY = param.Position.Y;
+            drawObject.X = param.Position.X;
+            drawObject.Y = param.Position.Y;
             drawList[param.ObjectName] = drawObject;
             return true;
         }
@@ -427,11 +427,7 @@ namespace GameGraphicsLib
 
         public GraphicsData SaveData()
         {
-            Dictionary<string, IDrawn> drawnObjects = new Dictionary<string, IDrawn>();
-            foreach (KeyValuePair<string, Animation> animation in animationList)
-            {
-                drawnObjects.Add(animation.Key, animation.Value);
-            }
+            Dictionary<string, IDrawn> drawnObjects = animationList.ToDictionary<KeyValuePair<string, Animation>, string, IDrawn>(animation => animation.Key, animation => animation.Value);
             foreach (KeyValuePair<string, IDrawnShape> shape in shapeList)
             {
                 drawnObjects.Add(shape.Key, shape.Value);
@@ -493,7 +489,7 @@ namespace GameGraphicsLib
 
         private void DrawLine(DrawnLine line)
         {
-            Vector2 position = new Vector2(line.PositionX, line.PositionY);
+            Vector2 position = new Vector2(line.X, line.Y);
             Vector2 endPos = new Vector2(line.EndX, line.EndY);
             Vector2 edge = endPos - position;
             float angle = (float) Math.Atan2(edge.Y, edge.X);
@@ -514,10 +510,10 @@ namespace GameGraphicsLib
             {
                 Name = rectangle.Name,
                 Color = rectangle.Color,
-                PositionX = rectangle.PositionX,
-                PositionY = rectangle.PositionY,
-                EndX = rectangle.PositionX + rectangle.Size.Width,
-                EndY = rectangle.PositionY,
+                X = rectangle.X,
+                Y = rectangle.Y,
+                EndX = rectangle.X + rectangle.Size.Width,
+                EndY = rectangle.Y,
                 Thickness = rectangle.Thickness
             };
 
@@ -525,10 +521,10 @@ namespace GameGraphicsLib
             {
                 Name = rectangle.Name,
                 Color = rectangle.Color,
-                PositionX = rectangle.PositionX + rectangle.Size.Width,
-                PositionY = rectangle.PositionY,
-                EndX = rectangle.PositionX + rectangle.Size.Width,
-                EndY = rectangle.PositionY + rectangle.Size.Height,
+                X = rectangle.X + rectangle.Size.Width,
+                Y = rectangle.Y,
+                EndX = rectangle.X + rectangle.Size.Width,
+                EndY = rectangle.Y + rectangle.Size.Height,
                 Thickness = rectangle.Thickness
             };
 
@@ -536,10 +532,10 @@ namespace GameGraphicsLib
             {
                 Name = rectangle.Name,
                 Color = rectangle.Color,
-                PositionX = rectangle.PositionX + rectangle.Size.Width,
-                PositionY = rectangle.PositionY + rectangle.Size.Height,
-                EndX = rectangle.PositionX,
-                EndY = rectangle.PositionY + rectangle.Size.Height,
+                X = rectangle.X + rectangle.Size.Width,
+                Y = rectangle.Y + rectangle.Size.Height,
+                EndX = rectangle.X,
+                EndY = rectangle.Y + rectangle.Size.Height,
                 Thickness = rectangle.Thickness
             };
 
@@ -547,10 +543,10 @@ namespace GameGraphicsLib
             {
                 Name = rectangle.Name,
                 Color = rectangle.Color,
-                PositionX = rectangle.PositionX,
-                PositionY = rectangle.PositionY + rectangle.Size.Height,
-                EndX = rectangle.PositionX,
-                EndY = rectangle.PositionY,
+                X = rectangle.X,
+                Y = rectangle.Y + rectangle.Size.Height,
+                EndX = rectangle.X,
+                EndY = rectangle.Y,
                 Thickness = rectangle.Thickness
             };
 
@@ -564,7 +560,7 @@ namespace GameGraphicsLib
 
         private void DrawString(DrawnString drawString)
         {
-            SpriteBatch.DrawString(drawString.Font, drawString.Value, new Vector2(drawString.PositionX, drawString.PositionY), drawString.Color);
+            SpriteBatch.DrawString(drawString.Font, drawString.Value, new Vector2(drawString.X, drawString.Y), drawString.Color);
         }
 
         

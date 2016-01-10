@@ -9,8 +9,8 @@ namespace GameGraphicsLib.DrawableShapes
         private const DrawnType _DrawnType = DrawnType.Shape;
         private const ShapeType _ShapeType = ShapeType.Line;
         public string Name { get; set; }
-        public float PositionX { get; set; }
-        public float PositionY { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
         public float EndX { get; set; }
         public float EndY { get; set; }
         public float Thickness { get; set; }
@@ -23,8 +23,8 @@ namespace GameGraphicsLib.DrawableShapes
             return new DrawnLine
             {
                 Name = name,
-                PositionX = PositionX,
-                PositionY = PositionY,
+                X = X,
+                Y = Y,
                 EndX = EndX,
                 EndY = EndY,
                 Thickness = Thickness,

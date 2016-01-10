@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using GameGraphicsLib;
@@ -50,8 +51,8 @@ namespace GameGraphicsLib
         }
         public AnimationStatus Status { get; private set; }
         public string Name { get; set; }
-        public float PositionX { get; set; }
-        public float PositionY { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
         public int DefaultWidth { get; set; }
         public int DefaultHeight { get; set; }
         public DrawnType DrawnType { get { return _DrawnType; } set { } }
@@ -152,14 +153,14 @@ namespace GameGraphicsLib
 
         public Vector2 SetPosition(Vector2 position)
         {
-            PositionX = position.X;
-            PositionY = position.Y;
+            X = position.X;
+            Y = position.Y;
             return position;
         }
 
         public Vector2 GetPosition()
         {
-            return new Vector2(PositionX, PositionY);
+            return new Vector2(X, Y);
         }
 
         public Vector2 SetOrigin(Vector2 origin)

@@ -11,8 +11,8 @@ namespace GameGraphicsLib.DrawableShapes
         private const ShapeType _Shape = ShapeType.Rectangle;
         
         public string Name { get; set; }
-        public float PositionX { get; set; }
-        public float PositionY { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public Size Size { get { return new Size(Width, Height); } set { Width = value.Width; Height = value.Height;} }
@@ -27,8 +27,8 @@ namespace GameGraphicsLib.DrawableShapes
             return new DrawnRectangle
             {
                 Name = name,
-                PositionX = PositionX,
-                PositionY = PositionY,
+                X = X,
+                Y = Y,
                 Size = Size,
                 Color = Color,
                 Thickness = Thickness
